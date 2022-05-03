@@ -19,13 +19,12 @@ def send(msg): # Allows the client to send a message to the server.
     send_length += b' ' * (HEADER - len(send_length))
     client.send(send_length)
     client.send(message) 
-    msg_length = conn.recv(HEADER).decode(FORMAT)
+    msg_length = client.recv(HEADER).decode(FORMAT)
     if msg_length: # Gets the length of the message and decodes it with that bit number when a message is recieved.
         msg_length = int(msg_length)
-        msg = conn.recv(msg_length).decode(FORMAT)
+        msg = client.recv(msg_length).decode(FORMAT)
 
         print(f'[{addr}] {msg}')
-        conn.send("Msg Recieved".encode(FORMAT))
 
 # Test messages sent to Server
 send("Hello World!")
